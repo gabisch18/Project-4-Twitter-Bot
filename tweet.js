@@ -43,6 +43,10 @@ function adjUrl(minCorpusCount, limit) {
 }
 
 function tweet() {
+    console.log(" ");
+	var d=new Date();
+	var ds = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+	console.log(ds);  // date/time of the request
 
 	var tweetText = nounPre.pick() + "\n" + verbPre.pick() + "\n" + adjsPre.pick();
 
@@ -59,11 +63,7 @@ function tweet() {
 		});
 }
 var nouns;
-function getNouns() {
-	console.log(" ");
-	var d=new Date();
-	var ds = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-	console.log(ds);  // date/time of the request	
+function getNouns() {	
 
 	// Get 200 nouns with minimum corpus count of 5,000 (lower numbers = more common words) 
 	request(nounUrl(5000,200), function(err, response, data) {
@@ -81,7 +81,11 @@ function getNouns() {
         nounPre = [
         "I am a " + singularize(nouns.pick().word) + ".",
         "I see a " + singularize(nouns.pick().word) + " outside my " + singularize(nouns.pick().word) + ".",
-        capitalize(nouns.pick().word) + ", " + nouns.pick().word + ", " + nouns.pick().word + "."
+        capitalize(nouns.pick().word) + ", " + nouns.pick().word + ", " + nouns.pick().word + ".",
+        "There is a " + singularize(nouns.pick().word) + " in the " + singularize(nouns.pick().word),
+        "I sense a " + verbs.pick().word + ".",
+        "I see " + pluralize(nouns.pick().word) + ".",
+        "So many " + pluralize(nouns.pick().word) + "."
         // etc.			
         ];
         
@@ -91,10 +95,6 @@ function getNouns() {
 }
 var verbs;
 function getVerbs() {
-	console.log(" ");
-	var d=new Date();
-	var ds = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-	console.log(ds);  // date/time of the request	
 
 	// Get 200 nouns with minimum corpus count of 5,000 (lower numbers = more common words) 
 	request(verbUrl(5000,200), function(err, response, data) {
@@ -112,20 +112,22 @@ function getVerbs() {
         verbPre = [
         "I need to " + verbs.pick().word + ".",
         "I want to " + verbs.pick().word + " while I " + verbs.pick().word +  ".",
-        verbs.pick().word + " with me."
+        verbs.pick().word + " with me.",
+        "Why must I " + verbs.pick().word + "?",
+        "How could you " + verbs.pick().word + "?",
+        "Please " + verbs.pick().word + ".",
+        capitalize(verbs.pick().word) + " with me.",
+        "I decide to " + verbs.pick().word + ".",
+        "You decide to " + verbs.pick().word + "."
         // etc.			
         ];
         
-        console.log("-------Tweet something");
+//        console.log("-------Tweet something");
 //        tweet();
 	});
 }
 var adjs;
 function getAdjs() {
-	console.log(" ");
-	var d=new Date();
-	var ds = d.toLocaleDateString() + " " + d.toLocaleTimeString();
-	console.log(ds);  // date/time of the request	
 
 	// Get 200 nouns with minimum corpus count of 5,000 (lower numbers = more common words) 
 	request(adjUrl(5000,200), function(err, response, data) {
@@ -142,11 +144,19 @@ function getAdjs() {
 		}
         adjsPre = [
         "I feel " + adjs.pick().word + ".",
-        adjs.pick().word + ", " + adjs.pick().word + ", and " + adjs.pick().word + "."
+        capitalize(adjs.pick().word) + ", " + adjs.pick().word + ", " + adjs.pick().word + ".", 
+        "A " + adjs.pick().word + " place.",
+        "Never feel " + adjs.pick().word + ".",
+        capitalize(adjs.pick().word) + " world.",
+        capitalize(adjs.pick().word) + " life.",
+        "The feeling of " + adjs.pick().word + ".",
+        "I am " + adjs.pick().word + ".",
+        "Why? " + capitalize(adjs.pick().word) + ".",
+        "You feel " + adjs.pick().word + "."
         // etc.			
         ];
         
-        console.log("-------Tweet something");
+        console.log("Calling Tweet");
         tweet();
         
 	});
@@ -157,11 +167,14 @@ function getAdjs() {
 
 
 getNouns();
+console.log("calling getNouns");
 getVerbs();
+console.log("calling getVerbs");
 getAdjs();
+console.log("calling getAdjs");
 
 //// Run the bot
 //runBot();
 
 // And recycle every hour
-setInterval(tweet, 1000 * 60 * 60);
+setInterval(tweet, 1000 * 60 * 30);
