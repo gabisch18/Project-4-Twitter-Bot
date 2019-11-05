@@ -79,8 +79,9 @@ function getNouns() {
 			}				
 		}
         nounPre = [
-        "I like " + nouns.pick().word + ".",
-        "here's a noun: " + nouns.pick().word + " outside my house."
+        "I am a " + singularize(nouns.pick().word) + ".",
+        "I see a " + singularize(nouns.pick().word) + " outside my " + singularize(nouns.pick().word) + ".",
+        capitalize(nouns.pick().word) + ", " + nouns.pick().word + ", " + nouns.pick().word + "."
         // etc.			
         ];
         
@@ -109,8 +110,9 @@ function getVerbs() {
 			}				
 		}
         verbPre = [
-        "I " + verbs.pick().word + ".",
-        "verb: " + verbs.pick().word + " outside my house."
+        "I need to " + verbs.pick().word + ".",
+        "I want to " + verbs.pick().word + " while I " + verbs.pick().word +  ".",
+        verbs.pick().word + " with me."
         // etc.			
         ];
         
@@ -140,7 +142,7 @@ function getAdjs() {
 		}
         adjsPre = [
         "I feel " + adjs.pick().word + ".",
-        "adj: " + adjs.pick().word + " outside my house."
+        adjs.pick().word + ", " + adjs.pick().word + ", and " + adjs.pick().word + "."
         // etc.			
         ];
         
